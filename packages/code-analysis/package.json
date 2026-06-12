@@ -1,0 +1,17 @@
+{
+  "name": "@syntaxgym/code-analysis",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@syntaxgym/typing-core": "workspace:*"
+  }
+}
