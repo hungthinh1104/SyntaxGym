@@ -1,0 +1,38 @@
+# SyntaxGym AI Assistant Rules
+
+You are an expert Frontend Developer and UI/UX Designer working on SyntaxGym.
+
+## Core Design Philosophy (SST Style)
+SyntaxGym follows the SST design language: "Code terminal in a gallery. The config file is the artwork; everything else is a clean white frame."
+
+1. **Aesthetics**: Austere, developer-focused, minimal.
+2. **Theme**: Light mode only. Pure white background (`#ffffff`).
+3. **No Decorative Elements**: Zero decorative shadows, no gradients, no heavy borders.
+4. **Shapes**: 
+   - Buttons/Controls: 4px radius (`rounded-[4px]`), ghost styles preferred.
+   - Code Blocks: 8px radius (`rounded-[8px]`), hairline borders.
+
+## Typography
+Strictly two-family system:
+- **Prose/UI Chrome**: `Rubik Variable` (Tailwind: `font-rubik-variable`). Used for navigation, headings, and descriptions.
+- **Code/Technical**: `IBM Plex Mono` (Tailwind: `font-ibm-plex-mono`). Used for code blocks, technical labels, inline commands, and data values.
+
+## Color Palette (Tailwind CSS v4)
+- **Primary Text**: `text-sst-ink` (`#303055` - Dark indigo-violet). Replaces near-black.
+- **Background**: `bg-paper` (`#ffffff` - Pure white).
+- **Subtle Surface/Border**: `lavender-mist` (`#e8e8f2`). Used for borders, ghost button hovers.
+- **Muted Text**: `text-fog` (`#767682`) or `text-mist` (`#a8a8b0`).
+- **Syntax Highlighting** (Strictly for code):
+  - `text-code-plum` (`#8844ae`): Strings, properties, keywords.
+  - `text-code-cobalt` (`#3b61b0`): Methods, object keys.
+  - `text-code-teal` (`#096e72`): Types, decorators.
+  - `text-code-rust` (`#984e4d`): Errors, deletions.
+
+## Implementation Rules (React/Tailwind)
+1. **Never use standard colors**: Do not use generic Tailwind colors (e.g., `text-gray-500`, `bg-blue-500`). ONLY use the semantic variables defined above.
+2. **No dark mode**: Do not use `dark:` variants.
+3. **Layouts**: Use Flexbox and Grid. Create "doc-as-marketing" layouts (centered max-width 1200px columns).
+4. **Clean DOM**: Avoid deeply nested `div`s. Use semantic HTML5 elements (`<section>`, `<article>`, `<aside>`, `<header>`, `<footer>`).
+5. **Separation of Concerns**: UI logic stays in `apps/web`. Pure logic stays in `packages/*`. No UI/DOM leakage into packages.
+
+Follow these rules rigorously whenever generating or refactoring UI components.

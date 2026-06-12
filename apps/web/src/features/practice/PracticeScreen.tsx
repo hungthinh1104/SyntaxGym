@@ -7,7 +7,9 @@ import { nowIso } from "@syntaxgym/shared";
 import { CodeTypingArea } from "./components/CodeTypingArea";
 import { PracticeStatsBar } from "./components/PracticeStatsBar";
 import { ResultSummary } from "./components/ResultSummary";
+import { Seo } from "../../components/Seo";
 import { useTypingSessionController } from "./hooks/useTypingSessionController";
+import { ui } from "../../lib/ui";
 
 type Props = {
   snippet: Snippet;
@@ -60,16 +62,31 @@ export function PracticeScreen({ snippet }: Props) {
   }
 
   return (
-    <section className="practice-grid">
-      <div className="panel">
-        <div className="snippet-header">
-          <div>
-            <p className="eyebrow">{snippet.language} · {snippet.topic} · {snippet.difficulty}</p>
-            <h3>{snippet.title}</h3>
-            <p className="muted">{snippet.description}</p>
+    <div className="flex flex-col gap-32 w-full lg:flex-row lg:items-start max-w-[1200px] mx-auto">
+      <Seo
+        title="Practice Rust Code Typing | SyntaxGym"
+        description="Practice Rust syntax and DSA code snippets with token-aware typing feedback."
+      />
+      <div className="flex-1 flex flex-col gap-32 w-full min-w-0">
+        <div className="flex justify-between items-start">
+          <div className="max-w-[600px]">
+            <p className={ui.eyebrow + " mb-8"}>
+              {snippet.language} · {snippet.topic} · {snippet.difficulty}
+            </p>
+            <h1 className={ui.heading + " mb-8"}>
+              {snippet.title}
+            </h1>
+            <p className={ui.body}>
+              {snippet.description}
+            </p>
           </div>
 
-          <button onClick={controller.reset}>Reset</button>
+          <button 
+            onClick={controller.reset}
+            className={ui.ghostButton + " flex items-center gap-4 shrink-0"}
+          >
+            Reset <span className="font-ibm-plex-mono">&gt;</span>
+          </button>
         </div>
 
         <PracticeStatsBar session={controller.session} score={score} />
@@ -81,7 +98,7 @@ export function PracticeScreen({ snippet }: Props) {
         />
       </div>
 
-      <aside className="panel">
+      <aside className="w-full lg:w-[320px] flex flex-col gap-32 shrink-0">
         <ResultSummary
           session={controller.session}
           score={score}
@@ -89,13 +106,27 @@ export function PracticeScreen({ snippet }: Props) {
         />
 
         {controller.session.status === "finished" && (
-          <div className="result-actions">
-            <button onClick={saveResult}>Save result</button>
-            <button onClick={controller.reset}>Try again</button>
-            {savedMessage && <p className="success">{savedMessage}</p>}
+          <div className="flex flex-col gap-16 pt-16 border-t border-lavender-mist">
+            <button 
+              onClick={saveResult}
+              className={ui.ghostButton + " flex justify-center items-center gap-8 border-sst-ink"}
+            >
+              Save result <span className="font-ibm-plex-mono text-mist">&gt;</span>
+            </button>
+            <button 
+              onClick={controller.reset}
+              className={ui.ghostButton + " flex justify-center items-center gap-8"}
+            >
+              Try again <span className="font-ibm-plex-mono text-mist">&gt;</span>
+            </button>
+            {savedMessage && (
+              <p className="text-caption text-code-teal text-center mt-8">
+                {savedMessage}
+              </p>
+            )}
           </div>
         )}
       </aside>
-    </section>
+    </div>
   );
 }
