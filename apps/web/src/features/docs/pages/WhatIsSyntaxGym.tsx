@@ -8,7 +8,14 @@ export function WhatIsSyntaxGym() {
       "@type": "SoftwareApplication",
       "name": "SyntaxGym",
       "applicationCategory": "EducationalApplication",
-      "operatingSystem": "Any"
+      "operatingSystem": "Any",
+      "description": "SyntaxGym is a local-first code typing trainer for developers.",
+      "url": "https://syntaxgym.dev",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     },
     {
       "@context": "https://schema.org",
@@ -132,6 +139,10 @@ export function WhatIsSyntaxGym() {
           <div className="flex flex-col gap-4">
             <dt className={ui.headingSm}>Does SyntaxGym require login?</dt>
             <dd className={ui.body}>No. It is fully local-first. All history is stored in your browser.</dd>
+          </div>
+          <div className="flex flex-col gap-4">
+            <dt className={ui.headingSm}>Does SyntaxGym scrape LeetCode?</dt>
+            <dd className={ui.body}>No. The snippets are curated or manually pasted by users.</dd>
           </div>
         </dl>
       </section>

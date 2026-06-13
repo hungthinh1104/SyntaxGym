@@ -68,7 +68,21 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
 
     if (event.key === "Tab") {
       event.preventDefault();
-      onCharacter("\t");
+      
+      let spacesToType = 0;
+      for (let i = session.cursorIndex; i < session.source.length; i++) {
+        if (session.source[i] === " " && spacesToType < 4) {
+          spacesToType++;
+        } else {
+          break;
+        }
+      }
+      
+      if (spacesToType === 0) spacesToType = 4;
+
+      for (let i = 0; i < spacesToType; i++) {
+        onCharacter(" ");
+      }
       return;
     }
 
@@ -79,13 +93,16 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
   }
 
   return (
-    <div
-      ref={containerRef}
-      tabIndex={0}
-      className={ui.codeBlock + " min-h-[560px] max-h-[70vh] overflow-auto whitespace-pre-wrap tracking-[-0.021em] outline-none focus:border-sst-ink/20 transition-all"}
-      onKeyDown={handleKeyDown}
-      aria-label="Code typing area"
-    >
+    <>
+      <span id="typing-instruction" className="sr-only">Type the code below. The editor is ready.</span>
+      <div
+        ref={containerRef}
+        tabIndex={0}
+        className={ui.codeBlock + " min-h-[360px] lg:min-h-[560px] max-h-[70vh] overflow-auto whitespace-pre-wrap tracking-[-0.021em] outline-none focus:ring-1 focus:ring-sst-ink/20 focus:border-sst-ink/30 transition-all"}
+        onKeyDown={handleKeyDown}
+        aria-label="Code typing area"
+        aria-describedby="typing-instruction"
+      >
       {Array.from(session.source).map((char, index) => {
         const typedChar = session.typed[index];
         const isTyped = typedChar !== undefined;
@@ -102,7 +119,7 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
         } else if (isTyped) {
           charClass += syntaxClass + " ";
         } else {
-          charClass += "text-mist ";
+          charClass += syntaxClass + " opacity-40 ";
         }
 
         if (char === "\n") {
@@ -135,6 +152,7 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
           </span>
         );
       })}
-    </div>
+      </div>
+    </>
   );
 }

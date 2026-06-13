@@ -33,6 +33,28 @@ export function RustTypingPractice() {
           "text": "Move to DSA snippets only after syntax stops blocking flow."
         }
       ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long should I practice Rust syntax each day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Practicing 10 to 15 minutes a day is enough to build solid muscle memory for Rust syntax without causing fatigue."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I memorize DSA snippets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The goal is not to memorize algorithms, but to ensure that syntax and token combinations do not block you when writing solutions."
+          }
+        }
+      ]
     }
   ];
 
@@ -111,6 +133,20 @@ match status &#123;
             </div>
           </div>
         </div>
+      </section>
+
+      <section>
+        <h2 className={ui.heading + " mb-16"}>Frequently Asked Questions</h2>
+        <dl className="flex flex-col gap-16">
+          <div className="flex flex-col gap-4">
+            <dt className={ui.headingSm}>How long should I practice Rust syntax each day?</dt>
+            <dd className={ui.body}>Practicing 10 to 15 minutes a day is enough to build solid muscle memory for Rust syntax without causing fatigue.</dd>
+          </div>
+          <div className="flex flex-col gap-4">
+            <dt className={ui.headingSm}>Should I memorize DSA snippets?</dt>
+            <dd className={ui.body}>The goal is not to memorize algorithms, but to ensure that syntax and token combinations do not block you when writing solutions.</dd>
+          </div>
+        </dl>
       </section>
     </article>
   );

@@ -30,10 +30,10 @@ export function ResultSummary({ session, score, tokenReport }: Props) {
           <ul className="flex flex-col">
             {tokenReport.weakTokens.slice(0, 8).map((item) => (
               <li key={item.token} className="flex items-center justify-between border-b border-lavender-mist py-8">
-                <code className="rounded-md bg-lavender-mist px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-sst-ink">
+                <code className="rounded-md bg-lavender-mist px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-sst-ink break-all max-w-[80%]">
                   {item.token}
                 </code>
-                <span className="text-caption text-fog">{item.misses} miss{item.misses > 1 ? "es" : ""}</span>
+                <span className="text-caption text-fog shrink-0">{item.misses} miss{item.misses > 1 ? "es" : ""}</span>
               </li>
             ))}
           </ul>
@@ -49,15 +49,15 @@ export function ResultSummary({ session, score, tokenReport }: Props) {
             {session.mistakes.slice(-8).map((mistake) => (
               <li key={mistake.id} className="flex items-center justify-between border-b border-lavender-mist py-8">
                 <div className="flex items-center gap-8">
-                  <code className="rounded-md bg-lavender-mist px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-sst-ink">
+                  <code className="rounded-md bg-lavender-mist px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-sst-ink break-all">
                     {printable(mistake.expected)}
                   </code>
-                  <span className="text-caption text-mist">typed</span>
-                  <code className="rounded-md bg-code-rust/10 px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-code-rust">
+                  <span className="text-caption text-mist shrink-0">typed</span>
+                  <code className="rounded-md bg-code-rust/10 px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-code-rust break-all">
                     {printable(mistake.actual)}
                   </code>
                 </div>
-                <small className="text-caption text-fog">{mistake.category}</small>
+                <small className="text-caption text-fog shrink-0">{mistake.category}</small>
               </li>
             ))}
           </ul>

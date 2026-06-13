@@ -68,7 +68,7 @@ export function PracticeScreen({ snippet }: Props) {
         description="Practice Rust syntax and DSA code snippets with token-aware typing feedback."
       />
       <div className="flex-1 flex flex-col gap-32 w-full min-w-0">
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col sm:flex-row gap-16 sm:gap-0 justify-between items-start">
           <div className="max-w-[600px]">
             <p className={ui.eyebrow + " mb-8"}>
               {snippet.language} · {snippet.topic} · {snippet.difficulty}

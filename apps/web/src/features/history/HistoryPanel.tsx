@@ -30,7 +30,7 @@ export function HistoryPanel() {
         title="Typing History | SyntaxGym"
         description="Review saved local typing sessions, WPM, accuracy, mistakes, and weak Rust tokens."
       />
-      <div className="flex justify-between items-start pb-16 border-b border-lavender-mist">
+      <div className="flex flex-col sm:flex-row gap-16 sm:gap-0 justify-between sm:items-start pb-16 border-b border-lavender-mist">
         <div>
           <h3 className={ui.heading + " mb-4"}>Session history</h3>
           <p className={ui.body}>Stored locally in this browser.</p>
@@ -45,7 +45,7 @@ export function HistoryPanel() {
       </div>
 
       {history.length === 0 ? (
-        <p className={ui.body + " text-fog"}>No saved sessions yet.</p>
+        <p className={ui.body + " text-fog"}>No saved sessions yet. Finish a practice session and save it to see your history.</p>
       ) : (
         <div className="flex flex-col gap-16">
           {history.map((item) => (

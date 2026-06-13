@@ -11,6 +11,7 @@ type Props = {
 };
 
 const repository = createLocalSnippetRepository();
+const MAX_CUSTOM_SNIPPET_LENGTH = 5000;
 
 export function SnippetLibrary({ selectedSnippetId, onSelect }: Props) {
   const [customSnippets, setCustomSnippets] = useState<Snippet[]>([]);
@@ -95,13 +96,23 @@ export function SnippetLibrary({ selectedSnippetId, onSelect }: Props) {
             onChange={(e) => setCustomCode(e.target.value)}
             rows={1}
           />
-          <button
-            onClick={saveCustomSnippet}
-            disabled={!customCode.trim()}
-            className={ui.ghostButton + " lg:w-1/4 disabled:opacity-50"}
-          >
-            Save & Practice
-          </button>
+          <div className="flex flex-col gap-4 lg:w-1/4">
+            <button
+              onClick={saveCustomSnippet}
+              disabled={customCode.trim().length === 0 || customCode.length > MAX_CUSTOM_SNIPPET_LENGTH}
+              className={ui.ghostButton + " disabled:opacity-50"}
+            >
+              Save & Practice
+            </button>
+            <div className="flex justify-between items-center text-caption px-4">
+              <span className={customCode.length > MAX_CUSTOM_SNIPPET_LENGTH ? "text-code-rust font-semibold" : "text-mist"}>
+                {customCode.length} / {MAX_CUSTOM_SNIPPET_LENGTH}
+              </span>
+              {customCode.length > MAX_CUSTOM_SNIPPET_LENGTH && (
+                <span className="text-code-rust">Too long</span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -127,33 +138,41 @@ export function SnippetLibrary({ selectedSnippetId, onSelect }: Props) {
         </aside>
 
         <div className="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-          {filteredSnippets.map((snippet) => (
-            <button
-              key={snippet.id}
-              onClick={() => onSelect(snippet)}
-              className={
-                "rounded-lg border border-lavender-mist p-16 text-left transition-colors " +
-                (selectedSnippetId === snippet.id
-                  ? "bg-lavender-mist border-sst-ink"
-                  : "bg-paper hover:bg-lavender-mist")
-              }
-            >
+          {filteredSnippets.length === 0 ? (
+            <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center py-32 border border-dashed border-lavender-mist rounded-lg text-fog">
+              No snippets found for this topic.
+            </div>
+          ) : (
+            filteredSnippets.map((snippet) => (
+              <button
+                key={snippet.id}
+                onClick={() => onSelect(snippet)}
+                className={
+                  "group rounded-lg border border-lavender-mist p-16 text-left transition-colors flex flex-col h-full " +
+                  (selectedSnippetId === snippet.id
+                    ? "bg-lavender-mist border-sst-ink"
+                    : "bg-paper hover:bg-lavender-mist")
+                }
+              >
               <div className="flex justify-between items-start mb-4">
                 <p className={ui.eyebrow}>
                   {snippet.language} · {snippet.topic}
                 </p>
                 {snippet.topic === "custom" && (
-                  <span className="text-caption text-code-plum font-semibold">User</span>
+                  <span className="rounded-md bg-lavender-mist px-6 py-2 text-[10px] font-semibold text-slate uppercase tracking-wide">User</span>
                 )}
               </div>
               <strong className="block text-body font-semibold text-sst-ink mb-4">
                 {snippet.title}
               </strong>
-              <span className={ui.body + " block"}>
+              <span className={ui.body + " block line-clamp-2"}>
                 {snippet.description}
               </span>
+              <span className="mt-auto pt-16 block text-caption font-semibold text-sst-ink opacity-0 transition-opacity group-hover:opacity-100">
+                Practice snippet &rarr;
+              </span>
             </button>
-          ))}
+          )))}
         </div>
       </div>
     </section>

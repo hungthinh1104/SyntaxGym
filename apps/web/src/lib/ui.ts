@@ -1,5 +1,5 @@
 export const ui = {
-  page: "mx-auto max-w-[1200px] px-24 py-32",
+  page: "mx-auto max-w-[1200px] px-16 py-24 md:px-24 md:py-32",
   panel: "rounded-lg border border-lavender-mist bg-paper p-16",
   softPanel: "rounded-lg border border-lavender-mist bg-lavender-mist p-16",
   ghostButton:

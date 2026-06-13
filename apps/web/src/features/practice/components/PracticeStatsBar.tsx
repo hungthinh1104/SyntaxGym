@@ -10,7 +10,7 @@ export function PracticeStatsBar({ session, score }: Props) {
   const progress = session.source.length === 0 ? 100 : Math.round((session.cursorIndex / session.source.length) * 100);
 
   return (
-    <div className="grid grid-cols-5 gap-8 border-y border-lavender-mist py-12">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 border-y border-lavender-mist py-12">
       <Stat label="WPM" value={score.adjustedWpm.toString()} />
       <Stat label="Accuracy" value={`${score.accuracy}%`} />
       <Stat label="Mistakes" value={session.mistakes.length.toString()} />
