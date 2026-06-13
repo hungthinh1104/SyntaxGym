@@ -64,6 +64,10 @@ pnpm dev
 
 Navigate to `http://localhost:5174` to start typing.
 
+## 🚀 Launch & Smoke Test
+
+For maintainers preparing a release, please follow the [Launch Checklist](docs/LAUNCH_CHECKLIST.md).
+
 ## ☁️ Deployment
 
 SyntaxGym is optimized for Vercel deployment.

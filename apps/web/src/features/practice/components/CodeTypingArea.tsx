@@ -41,10 +41,6 @@ function buildSyntaxColors(source: string): (string | null)[] {
 export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const mistakeIndexSet = useMemo(() => {
-    return new Set(session.mistakes.map((mistake) => mistake.index));
-  }, [session.mistakes]);
-
   const syntaxColors = useMemo(() => buildSyntaxColors(session.source), [session.source]);
 
   useEffect(() => {
@@ -107,7 +103,7 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
         const typedChar = session.typed[index];
         const isTyped = typedChar !== undefined;
         const isCurrent = index === session.cursorIndex;
-        const isMistake = mistakeIndexSet.has(index);
+        const isMistake = isTyped && typedChar !== session.source[index];
         const syntaxClass = syntaxColors[index] || "text-sst-ink";
         
         let charClass = "rounded-[2px] transition-colors ";

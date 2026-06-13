@@ -18,13 +18,13 @@ describe("applyInput", () => {
     expect(session.mistakes[0]?.actual).toBe("z");
   });
 
-  it("backspace after wrong input removes corrected mistake", () => {
+  it("backspace after wrong input does not remove mistake from history", () => {
     let session = createTypingSession({ snippetId: "x", source: "abc" });
     session = applyInput(session, { kind: "character", value: "z", timestamp: 1 });
     expect(session.mistakes).toHaveLength(1);
     session = applyInput(session, { kind: "backspace", timestamp: 2 });
     expect(session.cursorIndex).toBe(0);
-    expect(session.mistakes).toHaveLength(0);
+    expect(session.mistakes).toHaveLength(1);
   });
 
   it("reset clears typed, cursor, mistakes, timestamps, and status", () => {

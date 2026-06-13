@@ -5,16 +5,18 @@ type SeoProps = {
   description: string;
   canonicalPath?: string;
   jsonLd?: unknown;
+  noindex?: boolean;
 };
 
 const rawSiteUrl = import.meta.env.VITE_SITE_URL || "https://syntaxgym.dev";
 const SITE_URL = rawSiteUrl.replace(/\/$/, "");
 
-export function Seo({ title, description, canonicalPath, jsonLd }: SeoProps) {
+export function Seo({ title, description, canonicalPath, jsonLd, noindex }: SeoProps) {
   const canonicalUrl = canonicalPath ? `${SITE_URL}${canonicalPath}` : undefined;
 
   return (
     <Helmet>
+      {noindex && <meta name="robots" content="noindex, follow" />}
       <title>{title}</title>
       <meta name="description" content={description} />
       {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}

@@ -29,6 +29,7 @@ export function HistoryPanel() {
       <Seo
         title="Typing History | SyntaxGym"
         description="Review saved local typing sessions, WPM, accuracy, mistakes, and weak Rust tokens."
+        noindex
       />
       <div className="flex flex-col sm:flex-row gap-16 sm:gap-0 justify-between sm:items-start pb-16 border-b border-lavender-mist">
         <div>

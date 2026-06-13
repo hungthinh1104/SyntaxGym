@@ -8,7 +8,7 @@ export function createTypingSession(input: {
   return {
     id: createId("session"),
     snippetId: input.snippetId,
-    source: input.source,
+    source: input.source.replace(/\r/g, ""),
     typed: "",
     cursorIndex: 0,
     startedAt: null,

@@ -35,7 +35,6 @@ export function applyInput(session: TypingSession, command: ApplyInputCommand): 
       typed: session.typed.slice(0, -1),
       cursorIndex: correctedIndex,
       lastInputAt: command.timestamp,
-      mistakes: session.mistakes.filter(m => m.index !== correctedIndex),
       status: session.startedAt === null ? "idle" : "running"
     };
   }
