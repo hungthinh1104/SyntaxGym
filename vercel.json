@@ -5,7 +5,7 @@
   "outputDirectory": "apps/web/dist",
   "rewrites": [
     {
-      "source": "/((?!assets/|favicon.svg|logo.svg).*)",
+      "source": "/((?!assets/|favicon\\.svg|logo\\.svg|robots\\.txt|sitemap\\.xml|og-image\\.png|demo\\.webp|site\\.webmanifest).*)",
       "destination": "/index.html"
     }
   ]
