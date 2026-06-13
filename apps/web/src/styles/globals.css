@@ -41,6 +41,13 @@
   --radius-sm: 1px;
   --radius-md: 4px;
   --radius-lg: 8px;
+
+  --animate-blink: blink 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
 }
 
 @layer base {
