@@ -28,7 +28,7 @@ export function createLocalSessionHistoryRepository(): SessionHistoryRepository 
 
     async save(result) {
       const history = readHistory();
-      const next = [result, ...history].slice(0, 100);
+      const next = [result, ...history.filter(item => item.id !== result.id)].slice(0, 100);
       localStorage.setItem(STORAGE_KEYS.sessionHistory, JSON.stringify(next));
     },
 

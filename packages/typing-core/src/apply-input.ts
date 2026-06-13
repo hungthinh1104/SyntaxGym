@@ -28,11 +28,14 @@ export function applyInput(session: TypingSession, command: ApplyInputCommand): 
   if (command.kind === "backspace") {
     if (session.cursorIndex === 0) return session;
 
+    const correctedIndex = session.cursorIndex - 1;
+
     return {
       ...session,
       typed: session.typed.slice(0, -1),
-      cursorIndex: Math.max(0, session.cursorIndex - 1),
+      cursorIndex: correctedIndex,
       lastInputAt: command.timestamp,
+      mistakes: session.mistakes.filter(m => m.index !== correctedIndex),
       status: session.startedAt === null ? "idle" : "running"
     };
   }
