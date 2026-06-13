@@ -1,8 +1,17 @@
 export * from "./types";
-export * from "./rust-snippets";
-export * from "./dsa-snippets";
 
-import { rustSnippets } from "./rust-snippets";
-import { dsaSnippets } from "./dsa-snippets";
+import { structSnippets } from "./snippets/rust/structs";
+import { enumSnippets } from "./snippets/rust/enums";
+import { borrowingSnippets } from "./snippets/rust/borrowing";
+import { collectionsSnippets } from "./snippets/rust/collections";
+import { optionResultSnippets } from "./snippets/rust/option-result";
+import { dsaSnippets } from "./snippets/dsa/dsa";
 
-export const builtInSnippets = [...rustSnippets, ...dsaSnippets];
+export const builtInSnippets = [
+  ...structSnippets,
+  ...enumSnippets,
+  ...borrowingSnippets,
+  ...collectionsSnippets,
+  ...optionResultSnippets,
+  ...dsaSnippets,
+];

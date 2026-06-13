@@ -1,6 +1,6 @@
-import type { Snippet } from "./types";
+import type { Snippet } from "../../types";
 
-const now = new Date().toISOString();
+const BUILT_IN_CONTENT_DATE = "2026-06-13T00:00:00.000Z";
 
 export const dsaSnippets: Snippet[] = [
   {
@@ -30,8 +30,8 @@ export const dsaSnippets: Snippet[] = [
     }
     None
 }`,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: BUILT_IN_CONTENT_DATE,
+    updatedAt: BUILT_IN_CONTENT_DATE,
   },
   {
     id: "dsa-two-pointers",
@@ -57,8 +57,8 @@ export const dsaSnippets: Snippet[] = [
         right -= 1;
     }
 }`,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: BUILT_IN_CONTENT_DATE,
+    updatedAt: BUILT_IN_CONTENT_DATE,
   },
   {
     id: "dsa-hashmap-frequency",
@@ -81,8 +81,8 @@ pub fn count_frequencies(nums: &[i32]) -> HashMap<i32, i32> {
     
     counts
 }`,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: BUILT_IN_CONTENT_DATE,
+    updatedAt: BUILT_IN_CONTENT_DATE,
   },
   {
     id: "dsa-bfs-queue",
@@ -96,7 +96,7 @@ pub fn count_frequencies(nums: &[i32]) -> HashMap<i32, i32> {
     tags: ["bfs", "queue"],
     code: `use std::collections::{VecDeque, HashSet};
 
-pub fn bfs(graph: &Vec<Vec<usize>>, start: usize) {
+pub fn bfs(graph: &[Vec<usize>], start: usize) {
     let mut queue = VecDeque::new();
     let mut visited = HashSet::new();
     
@@ -113,8 +113,8 @@ pub fn bfs(graph: &Vec<Vec<usize>>, start: usize) {
         }
     }
 }`,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: BUILT_IN_CONTENT_DATE,
+    updatedAt: BUILT_IN_CONTENT_DATE,
   },
   {
     id: "dsa-dfs-recursive",
@@ -128,7 +128,7 @@ pub fn bfs(graph: &Vec<Vec<usize>>, start: usize) {
     tags: ["dfs", "recursion"],
     code: `use std::collections::HashSet;
 
-pub fn dfs(graph: &Vec<Vec<usize>>, node: usize, visited: &mut HashSet<usize>) {
+pub fn dfs(graph: &[Vec<usize>], node: usize, visited: &mut HashSet<usize>) {
     if !visited.insert(node) {
         return;
     }
@@ -139,7 +139,7 @@ pub fn dfs(graph: &Vec<Vec<usize>>, node: usize, visited: &mut HashSet<usize>) {
         dfs(graph, neighbor, visited);
     }
 }`,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: BUILT_IN_CONTENT_DATE,
+    updatedAt: BUILT_IN_CONTENT_DATE,
   }
 ];
