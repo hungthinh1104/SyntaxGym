@@ -33,6 +33,8 @@ const routes = [
   { path: '/docs', changefreq: 'weekly', priority: '0.8' },
   { path: '/docs/what-is-syntaxgym', changefreq: 'monthly', priority: '0.8' },
   { path: '/docs/rust-typing-practice', changefreq: 'monthly', priority: '0.8' },
+  { path: '/docs/rust-option-result-practice', changefreq: 'monthly', priority: '0.8' },
+  { path: '/docs/rust-enum-match-practice', changefreq: 'monthly', priority: '0.8' },
 ];
 
 let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>

@@ -8,6 +8,8 @@ import { DocsLayout } from "../features/docs/DocsLayout";
 import { DocsIndex } from "../features/docs/pages/DocsIndex";
 import { WhatIsSyntaxGym } from "../features/docs/pages/WhatIsSyntaxGym";
 import { RustTypingPractice } from "../features/docs/pages/RustTypingPractice";
+import { RustOptionResultPractice } from "../features/docs/pages/RustOptionResultPractice";
+import { RustEnumMatchPractice } from "../features/docs/pages/RustEnumMatchPractice";
 import { ui } from "../lib/ui";
 
 export function App() {
@@ -76,6 +78,8 @@ export function App() {
             <Route index element={<DocsIndex />} />
             <Route path="what-is-syntaxgym" element={<WhatIsSyntaxGym />} />
             <Route path="rust-typing-practice" element={<RustTypingPractice />} />
+            <Route path="rust-option-result-practice" element={<RustOptionResultPractice />} />
+            <Route path="rust-enum-match-practice" element={<RustEnumMatchPractice />} />
           </Route>
         </Routes>
       </main>

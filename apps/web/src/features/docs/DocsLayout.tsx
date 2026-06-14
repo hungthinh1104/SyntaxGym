@@ -31,6 +31,30 @@ export function DocsLayout() {
               Rust typing practice
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/docs/rust-option-result-practice"
+              className={({ isActive }) =>
+                isActive
+                  ? `${ui.navButton} w-full text-left bg-lavender-mist text-sst-ink`
+                  : `${ui.navButton} w-full text-left`
+              }
+            >
+              Option & Result Practice
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/docs/rust-enum-match-practice"
+              className={({ isActive }) =>
+                isActive
+                  ? `${ui.navButton} w-full text-left bg-lavender-mist text-sst-ink`
+                  : `${ui.navButton} w-full text-left`
+              }
+            >
+              Enum & Match Practice
+            </NavLink>
+          </li>
         </ul>
       </aside>
 
