@@ -109,7 +109,7 @@ export function LocalDataPanel() {
         <h3 className={ui.headingSm + " flex items-center gap-8 mb-4"}>
           <span>💾</span> Local Data
         </h3>
-        <p className={ui.body + " text-[13px]"}>Your data stays in this browser unless you export it.</p>
+        <p className={ui.body + " text-[13px]"}>SyntaxGym stores your practice data locally in this browser. Export JSON if you want a backup.</p>
       </div>
 
       <div className="flex flex-wrap gap-8">

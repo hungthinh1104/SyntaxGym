@@ -1,0 +1,17 @@
+{
+  "name": "SyntaxGym",
+  "short_name": "SyntaxGym",
+  "description": "A local-first Rust syntax typing trainer.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#303055",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
