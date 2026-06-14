@@ -17,5 +17,5 @@ export const ui = {
   body:
     "text-body leading-body text-slate",
   codeBlock:
-    "rounded-lg border border-lavender-mist bg-lavender-mist p-16 font-ibm-plex-mono text-body leading-body tracking-[-0.021em] text-sst-ink shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.04)]",
+    "rounded-lg border border-lavender-mist bg-lavender-mist p-16 font-ibm-plex-mono text-body leading-body tracking-[-0.021em] text-sst-ink shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.04)] overflow-x-auto max-w-full",
 };
