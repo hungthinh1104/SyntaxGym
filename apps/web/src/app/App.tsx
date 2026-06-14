@@ -12,6 +12,7 @@ import { RustOptionResultPractice } from "../features/docs/pages/RustOptionResul
 import { RustEnumMatchPractice } from "../features/docs/pages/RustEnumMatchPractice";
 import { RustBorrowingPractice } from "../features/docs/pages/RustBorrowingPractice";
 import { RustCollectionsDsaPractice } from "../features/docs/pages/RustCollectionsDsaPractice";
+import { LandingPage } from "../features/landing/LandingPage";
 import { ui } from "../lib/ui";
 
 export function App() {
@@ -64,7 +65,7 @@ export function App() {
 
       <main className={ui.page + " flex-1"}>
         <Routes>
-          <Route path="/" element={<Navigate to="/practice" replace />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/practice" element={<PracticeScreen key={`${selectedSnippet.id}-${sessionNonce}`} snippet={selectedSnippet} selectedPackId={selectedPackId} sessionContext={sessionContext} onSelectSnippet={(snippet, packId, context) => { setSelectedSnippet(snippet); setSessionNonce(n => n + 1); if (packId !== undefined) setSelectedPackId(packId); if (context !== undefined) setSessionContext(context); }} />} />
           <Route
             path="/snippets"
