@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { getSiteUrl } from "../config/site";
 
 type SeoProps = {
   title: string;
@@ -8,8 +9,7 @@ type SeoProps = {
   noindex?: boolean;
 };
 
-const rawSiteUrl = import.meta.env.VITE_SITE_URL || "https://syntaxgym.online";
-const SITE_URL = rawSiteUrl.replace(/\/$/, "");
+const SITE_URL = getSiteUrl();
 
 export function Seo({ title, description, canonicalPath, jsonLd, noindex }: SeoProps) {
   const canonicalUrl = canonicalPath ? `${SITE_URL}${canonicalPath}` : undefined;

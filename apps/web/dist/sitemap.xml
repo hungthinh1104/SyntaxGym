@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://syntaxgym.dev/</loc>
+    <loc>https://syntaxgym.online</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://syntaxgym.dev/practice</loc>
+    <loc>https://syntaxgym.online/practice</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://syntaxgym.dev/snippets</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://syntaxgym.dev/docs</loc>
+    <loc>https://syntaxgym.online/snippets</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://syntaxgym.dev/docs/what-is-syntaxgym</loc>
+    <loc>https://syntaxgym.online/docs</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syntaxgym.online/docs/what-is-syntaxgym</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://syntaxgym.dev/docs/rust-typing-practice</loc>
+    <loc>https://syntaxgym.online/docs/rust-typing-practice</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
