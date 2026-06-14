@@ -10,6 +10,8 @@ export type DailyDrillProgress = {
 export type DailyDrillRepository = {
   get(): Promise<DailyDrillProgress>;
   complete(dateString: string): Promise<DailyDrillProgress>;
+  clear(): Promise<void>;
+  replaceAll(progress: DailyDrillProgress): Promise<void>;
 };
 
 const DEFAULT_PROGRESS: DailyDrillProgress = {
@@ -65,6 +67,14 @@ export function createLocalDailyDrillRepository(): DailyDrillRepository {
         // Fail gracefully
       }
       return nextProgress;
+    },
+    
+    async clear() {
+      localStorage.removeItem(STORAGE_KEYS.dailyDrillProgress);
+    },
+
+    async replaceAll(progress) {
+      localStorage.setItem(STORAGE_KEYS.dailyDrillProgress, JSON.stringify(progress));
     }
   };
 }

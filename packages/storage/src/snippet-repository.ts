@@ -6,6 +6,8 @@ export type SnippetRepository = {
   listCustom(): Promise<Snippet[]>;
   saveCustom(snippet: Snippet): Promise<void>;
   removeCustom(id: string): Promise<void>;
+  clearCustom(): Promise<void>;
+  replaceAllCustom(snippets: Snippet[]): Promise<void>;
 };
 
 export function createLocalSnippetRepository(): SnippetRepository {
@@ -22,6 +24,14 @@ export function createLocalSnippetRepository(): SnippetRepository {
 
     async removeCustom(id) {
       const snippets = readSnippets().filter((item) => item.id !== id);
+      localStorage.setItem(STORAGE_KEYS.customSnippets, JSON.stringify(snippets));
+    },
+
+    async clearCustom() {
+      localStorage.removeItem(STORAGE_KEYS.customSnippets);
+    },
+
+    async replaceAllCustom(snippets) {
       localStorage.setItem(STORAGE_KEYS.customSnippets, JSON.stringify(snippets));
     }
   };

@@ -18,6 +18,7 @@ export type SessionHistoryRepository = {
   list(): Promise<PersistedSessionResult[]>;
   save(result: PersistedSessionResult): Promise<void>;
   clear(): Promise<void>;
+  replaceAll(history: PersistedSessionResult[]): Promise<void>;
 };
 
 export function createLocalSessionHistoryRepository(): SessionHistoryRepository {
@@ -34,6 +35,10 @@ export function createLocalSessionHistoryRepository(): SessionHistoryRepository 
 
     async clear() {
       localStorage.removeItem(STORAGE_KEYS.sessionHistory);
+    },
+
+    async replaceAll(history) {
+      localStorage.setItem(STORAGE_KEYS.sessionHistory, JSON.stringify(history));
     }
   };
 }

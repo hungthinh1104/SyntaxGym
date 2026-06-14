@@ -4,6 +4,7 @@ import {
   type PersistedSessionResult
 } from "@syntaxgym/storage";
 import { Seo } from "../../components/Seo";
+import { LocalDataPanel } from "./components/LocalDataPanel";
 import { ui } from "../../lib/ui";
 
 const repository = createLocalSessionHistoryRepository();
@@ -25,27 +26,21 @@ export function HistoryPanel() {
   }, []);
 
   return (
-    <section className="flex flex-col gap-32 w-full">
+    <div className="flex flex-col lg:flex-row gap-32 w-full lg:items-start max-w-[1200px] mx-auto">
       <Seo
         title="Typing History | SyntaxGym"
         description="Review saved local typing sessions, WPM, accuracy, mistakes, and weak Rust tokens."
         noindex
       />
-      <div className="flex flex-col sm:flex-row gap-16 sm:gap-0 justify-between sm:items-start pb-16 border-b border-lavender-mist">
-        <div>
-          <h3 className={ui.heading + " mb-4"}>Session history</h3>
-          <p className={ui.body}>Stored locally in this browser.</p>
+      <div className="flex-1 flex flex-col gap-32 w-full min-w-0">
+        <div className="flex flex-col sm:flex-row gap-16 sm:gap-0 justify-between sm:items-start pb-16 border-b border-lavender-mist">
+          <div>
+            <h3 className={ui.heading + " mb-4"}>Session history</h3>
+            <p className={ui.body}>Review your past typing sessions.</p>
+          </div>
         </div>
 
-        <button 
-          onClick={clear}
-          className={ui.ghostButton}
-        >
-          Clear
-        </button>
-      </div>
-
-      {history.length === 0 ? (
+        {history.length === 0 ? (
         <p className={ui.body + " text-fog"}>No saved sessions yet. Finish a practice session and save it to see your history.</p>
       ) : (
         <div className="flex flex-col gap-16">
@@ -80,9 +75,14 @@ export function HistoryPanel() {
                 </div>
               )}
             </article>
-          ))}
-        </div>
-      )}
-    </section>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <aside className="w-full lg:w-[320px] shrink-0">
+        <LocalDataPanel />
+      </aside>
+    </div>
   );
 }
