@@ -21,7 +21,7 @@ export function getSmartTabKeystrokes(source: string, cursorIndex: number): stri
   if (nextChar === " ") {
     let spacesToType = 0;
     for (let i = cursorIndex; i < source.length; i++) {
-      if (source[i] === " " && spacesToType < 2) {
+      if (source[i] === " ") {
         spacesToType++;
       } else {
         break;
