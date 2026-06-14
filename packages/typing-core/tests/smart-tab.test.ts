@@ -2,17 +2,17 @@ import { describe, expect, it } from "vitest";
 import { getSmartTabKeystrokes } from "../src/smart-tab";
 
 describe("getSmartTabKeystrokes", () => {
-  it("consumes all spaces of indentation at once", () => {
+  it("consumes 2 spaces of indentation", () => {
     const source = "    let x;";
     const chars = getSmartTabKeystrokes(source, 0);
-    expect(chars).toEqual([" ", " ", " ", " "]);
+    expect(chars).toEqual([" ", " "]);
   });
 
-  it("consumes remaining spaces from middle of indentation", () => {
+  it("consumes remaining spaces if < 2", () => {
     const source = "    let x;";
-    // At index 2, there are 2 spaces left
-    const chars = getSmartTabKeystrokes(source, 2);
-    expect(chars).toEqual([" ", " "]);
+    // At index 3, there is 1 space left
+    const chars = getSmartTabKeystrokes(source, 3);
+    expect(chars).toEqual([" "]);
   });
 
   it("consumes real \\t", () => {

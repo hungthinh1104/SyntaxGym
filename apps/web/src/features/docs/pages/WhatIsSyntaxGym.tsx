@@ -42,7 +42,7 @@ export function WhatIsSyntaxGym() {
           "name": "How is SyntaxGym different from Monkeytype?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Monkeytype is for general text or custom plain text. SyntaxGym parses code tokens, scores your Rust accuracy (like missing '::' or '&'), and tracks weak syntax."
+            "text": "Monkeytype is for general text or custom plain text. SyntaxGym detects common code syntax tokens, scores your Rust accuracy (like missing '::' or '&'), and tracks weak syntax."
           }
         },
         {
@@ -134,7 +134,7 @@ export function WhatIsSyntaxGym() {
           </div>
           <div className="flex flex-col gap-4">
             <dt className={ui.headingSm}>How is SyntaxGym different from Monkeytype?</dt>
-            <dd className={ui.body}>Monkeytype is for general text or custom plain text. SyntaxGym parses code tokens, scores your Rust accuracy (like missing `::` or `&`), and tracks weak syntax.</dd>
+            <dd className={ui.body}>Monkeytype is for general text or custom plain text. SyntaxGym detects common code syntax tokens, scores your Rust accuracy (like missing `::` or `&`), and tracks weak syntax.</dd>
           </div>
           <div className="flex flex-col gap-4">
             <dt className={ui.headingSm}>Does SyntaxGym require login?</dt>

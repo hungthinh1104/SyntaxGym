@@ -10,6 +10,8 @@ import { WhatIsSyntaxGym } from "../features/docs/pages/WhatIsSyntaxGym";
 import { RustTypingPractice } from "../features/docs/pages/RustTypingPractice";
 import { RustOptionResultPractice } from "../features/docs/pages/RustOptionResultPractice";
 import { RustEnumMatchPractice } from "../features/docs/pages/RustEnumMatchPractice";
+import { RustBorrowingPractice } from "../features/docs/pages/RustBorrowingPractice";
+import { RustCollectionsDsaPractice } from "../features/docs/pages/RustCollectionsDsaPractice";
 import { ui } from "../lib/ui";
 
 export function App() {
@@ -86,6 +88,8 @@ export function App() {
             <Route path="rust-typing-practice" element={<RustTypingPractice />} />
             <Route path="rust-option-result-practice" element={<RustOptionResultPractice />} />
             <Route path="rust-enum-match-practice" element={<RustEnumMatchPractice />} />
+            <Route path="rust-borrowing-practice" element={<RustBorrowingPractice />} />
+            <Route path="rust-collections-dsa-practice" element={<RustCollectionsDsaPractice />} />
           </Route>
         </Routes>
       </main>
@@ -95,7 +99,7 @@ export function App() {
           <span>Local-first · No login required</span>
           <div className="flex gap-16">
             <Link to="/docs" className="hover:text-sst-ink transition-colors">Guide</Link>
-            <a href="https://github.com/diphungthinh/SyntaxGym" target="_blank" rel="noreferrer" className="hover:text-sst-ink transition-colors">GitHub</a>
+            <a href="https://github.com/hungthinh1104/SyntaxGym" target="_blank" rel="noreferrer" className="hover:text-sst-ink transition-colors">GitHub</a>
           </div>
         </div>
       </footer>

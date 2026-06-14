@@ -55,6 +55,30 @@ export function DocsLayout() {
               Enum & Match Practice
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/docs/rust-borrowing-practice"
+              className={({ isActive }) =>
+                isActive
+                  ? `${ui.navButton} w-full text-left bg-lavender-mist text-sst-ink`
+                  : `${ui.navButton} w-full text-left`
+              }
+            >
+              Borrowing & Ownership
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/docs/rust-collections-dsa-practice"
+              className={({ isActive }) =>
+                isActive
+                  ? `${ui.navButton} w-full text-left bg-lavender-mist text-sst-ink`
+                  : `${ui.navButton} w-full text-left`
+              }
+            >
+              Collections & DSA
+            </NavLink>
+          </li>
         </ul>
       </aside>
 

@@ -32,6 +32,14 @@ export function DocsIndex() {
           <h2 className={ui.headingSm + " mb-4"}>Enum & Match Practice</h2>
           <p className={ui.body}>Master Rust's enum and pattern matching syntax, including the fat arrow operator.</p>
         </Link>
+        <Link to="/docs/rust-borrowing-practice" className={ui.panel + " hover:border-fog transition-colors"}>
+          <h2 className={ui.headingSm + " mb-4"}>Borrowing & Ownership Practice</h2>
+          <p className={ui.body}>Build muscle memory for Rust's ownership model, references, and lifetime annotations.</p>
+        </Link>
+        <Link to="/docs/rust-collections-dsa-practice" className={ui.panel + " hover:border-fog transition-colors"}>
+          <h2 className={ui.headingSm + " mb-4"}>Collections & DSA Practice</h2>
+          <p className={ui.body}>Practice typing Data Structures and Algorithms with Vec, HashMap, and complex iteration.</p>
+        </Link>
       </div>
     </div>
   );

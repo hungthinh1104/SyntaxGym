@@ -35,6 +35,8 @@ const routes = [
   { path: '/docs/rust-typing-practice', changefreq: 'monthly', priority: '0.8' },
   { path: '/docs/rust-option-result-practice', changefreq: 'monthly', priority: '0.8' },
   { path: '/docs/rust-enum-match-practice', changefreq: 'monthly', priority: '0.8' },
+  { path: '/docs/rust-borrowing-practice', changefreq: 'monthly', priority: '0.8' },
+  { path: '/docs/rust-collections-dsa-practice', changefreq: 'monthly', priority: '0.8' },
 ];
 
 let sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>

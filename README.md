@@ -17,7 +17,7 @@ SyntaxGym is a targeted typing trainer that detects common Rust syntax tokens (l
 
 **What it is:**
 - A muscle memory trainer for systems programming languages.
-- Fully local-first. We do not track your typing data, require a login, or use paywalls. Everything is stored securely in your browser's `localStorage`.
+- Fully local-first. We do not track your typing data, require a login, or use paywalls. Everything is stored locally in your browser's `localStorage`.
 
 **What it is not:**
 - SyntaxGym uses heuristic token detection. It is not a Rust compiler or parser.
@@ -26,7 +26,7 @@ SyntaxGym is a targeted typing trainer that detects common Rust syntax tokens (l
 ## 🚀 Features
 
 - **Built-in Rust & DSA Snippets:** Practice exact, real-world code structures.
-- **Token-Aware Analytics:** Get a diagnostic report of your missed tokens.
+- **Token-Aware Engine:** Rather than just checking letters, SyntaxGym detects common code syntax tokens, helping you focus on complete syntax patterns like `Result<T, E>`.
 - **Custom Code Snippets:** Paste your own difficult code blocks to train.
 - **Flat SST Design:** Distraction-free, technical interface.
 
