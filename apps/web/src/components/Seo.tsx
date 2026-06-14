@@ -8,7 +8,7 @@ type SeoProps = {
   noindex?: boolean;
 };
 
-const rawSiteUrl = import.meta.env.VITE_SITE_URL || "https://syntaxgym.dev";
+const rawSiteUrl = import.meta.env.VITE_SITE_URL || "https://syntaxgym.online";
 const SITE_URL = rawSiteUrl.replace(/\/$/, "");
 
 export function Seo({ title, description, canonicalPath, jsonLd, noindex }: SeoProps) {

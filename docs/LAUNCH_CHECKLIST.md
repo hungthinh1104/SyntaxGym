@@ -10,7 +10,7 @@ A concise checklist for maintainers before and after deploying SyntaxGym.
 
 ## Deployment
 - Deploy to Vercel (or preferred host).
-- Ensure `VITE_SITE_URL` environment variable is set to the production domain without a trailing slash (e.g., `https://syntaxgym.dev`).
+- Ensure `VITE_SITE_URL` environment variable is set to the production domain without a trailing slash (e.g., `https://syntaxgym.online`).
 
 ## Post-Deploy Smoke Test
 1. Open `/practice`

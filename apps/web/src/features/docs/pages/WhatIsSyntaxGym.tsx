@@ -10,7 +10,7 @@ export function WhatIsSyntaxGym() {
       "applicationCategory": "EducationalApplication",
       "operatingSystem": "Any",
       "description": "SyntaxGym is a local-first code typing trainer for developers.",
-      "url": "https://syntaxgym.dev",
+      "url": "https://syntaxgym.online",
       "offers": {
         "@type": "Offer",
         "price": "0",

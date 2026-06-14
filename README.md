@@ -5,7 +5,7 @@
   <p>
     Live Demo (Coming soon)
     ·
-    <a href="https://syntaxgym.dev/docs/what-is-syntaxgym">Documentation</a>
+    <a href="https://syntaxgym.online/docs/what-is-syntaxgym">Documentation</a>
     ·
     <a href="#contributing">Contributing</a>
   </p>
@@ -73,7 +73,7 @@ For maintainers preparing a release, please follow the [Launch Checklist](docs/L
 SyntaxGym is optimized for Vercel deployment.
 Since canonical URLs and Open Graph tags require an absolute URL, you must provide your production domain as an environment variable.
 
-1. Set `VITE_SITE_URL` in your Vercel Project Settings (e.g., `https://syntaxgym.dev`).
+1. Set `VITE_SITE_URL` in your Vercel Project Settings (e.g., `https://syntaxgym.online`).
 2. Ensure the URL does not have a trailing slash.
 
 See `.env.example` for details.
