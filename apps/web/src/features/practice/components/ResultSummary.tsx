@@ -1,5 +1,6 @@
 import type { TokenReport } from "@syntaxgym/code-analysis";
 import type { TypingScore, TypingSession } from "@syntaxgym/typing-core";
+import { getUniqueMistakes } from "@syntaxgym/typing-core";
 import { ui } from "../../../lib/ui";
 
 type Props = {
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export function ResultSummary({ session, score, tokenReport, dailyDrillStreak, onRetryClick }: Props) {
+  const uniqueMistakes = getUniqueMistakes(session.mistakes);
+
   return (
     <div className="flex flex-col gap-32">
       <div>
@@ -19,7 +22,7 @@ export function ResultSummary({ session, score, tokenReport, dailyDrillStreak, o
           <Row label="Adjusted WPM" value={score.adjustedWpm.toString()} />
           <Row label="Raw WPM" value={score.rawWpm.toString()} />
           <Row label="Accuracy" value={`${score.accuracy}%`} />
-          <Row label="Mistakes" value={session.mistakes.length.toString()} />
+          <Row label="Mistakes" value={uniqueMistakes.length.toString()} />
           <Row label="Typed chars" value={score.typedCharacters.toString()} />
         </ul>
       </div>
@@ -66,11 +69,11 @@ export function ResultSummary({ session, score, tokenReport, dailyDrillStreak, o
 
       <div>
         <h4 className={ui.eyebrow + " mb-12"}>Raw mistake categories</h4>
-        {session.mistakes.length === 0 ? (
+        {uniqueMistakes.length === 0 ? (
           <p className={ui.body}>No mistakes.</p>
         ) : (
           <ul className="flex flex-col">
-            {session.mistakes.slice(-8).map((mistake) => (
+            {uniqueMistakes.slice(-8).map((mistake) => (
               <li key={mistake.id} className="flex items-center justify-between border-b border-lavender-mist py-8">
                 <div className="flex items-center gap-8">
                   <code className="rounded-md bg-lavender-mist px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-sst-ink break-all">

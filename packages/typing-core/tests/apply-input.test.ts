@@ -9,22 +9,52 @@ describe("applyInput", () => {
     expect(session.mistakes).toHaveLength(0);
   });
 
-  it("wrong input records mistake", () => {
+  it("wrong input records mistake but does not advance cursor", () => {
     let session = createTypingSession({ snippetId: "x", source: "abc" });
     session = applyInput(session, { kind: "character", value: "z", timestamp: 1 });
-    expect(session.cursorIndex).toBe(1);
+    expect(session.cursorIndex).toBe(0);
     expect(session.mistakes).toHaveLength(1);
     expect(session.mistakes[0]?.expected).toBe("a");
     expect(session.mistakes[0]?.actual).toBe("z");
+    expect(session.typed).toBe("z");
   });
 
-  it("backspace after wrong input does not remove mistake from history", () => {
+  it("correct input after wrong input advances cursor", () => {
     let session = createTypingSession({ snippetId: "x", source: "abc" });
     session = applyInput(session, { kind: "character", value: "z", timestamp: 1 });
-    expect(session.mistakes).toHaveLength(1);
+    expect(session.cursorIndex).toBe(0);
+    session = applyInput(session, { kind: "character", value: "a", timestamp: 2 });
+    expect(session.cursorIndex).toBe(1);
+    expect(session.typed).toBe("a");
+  });
+
+  it("backspace clears visible wrong character without changing cursor index", () => {
+    let session = createTypingSession({ snippetId: "x", source: "abc" });
+    session = applyInput(session, { kind: "character", value: "z", timestamp: 1 });
+    expect(session.typed).toBe("z");
+    expect(session.cursorIndex).toBe(0);
     session = applyInput(session, { kind: "backspace", timestamp: 2 });
     expect(session.cursorIndex).toBe(0);
+    expect(session.typed).toBe("");
     expect(session.mistakes).toHaveLength(1);
+  });
+
+  it("backspace moves back if cursor has advanced", () => {
+    let session = createTypingSession({ snippetId: "x", source: "abc" });
+    session = applyInput(session, { kind: "character", value: "a", timestamp: 1 });
+    expect(session.cursorIndex).toBe(1);
+    session = applyInput(session, { kind: "backspace", timestamp: 2 });
+    expect(session.cursorIndex).toBe(0);
+    expect(session.typed).toBe("");
+  });
+
+  it("repeated wrong key at same index records multiple mistakes", () => {
+    let session = createTypingSession({ snippetId: "x", source: "abc" });
+    session = applyInput(session, { kind: "character", value: "y", timestamp: 1 });
+    session = applyInput(session, { kind: "character", value: "z", timestamp: 2 });
+    expect(session.cursorIndex).toBe(0);
+    expect(session.mistakes).toHaveLength(2);
+    expect(session.typed).toBe("z");
   });
 
   it("reset clears typed, cursor, mistakes, timestamps, and status", () => {

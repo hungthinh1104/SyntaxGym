@@ -1,4 +1,5 @@
 import type { TypingScore, TypingSession } from "./types";
+import { getUniqueMistakes } from "./unique-mistakes";
 
 const WORD_LENGTH = 5;
 
@@ -9,7 +10,7 @@ export function calculateScore(session: TypingSession, now = Date.now()): Typing
   const minutes = Math.max(durationMs / 60_000, 1 / 60_000);
 
   const typedCharacters = session.typed.length;
-  const incorrectCharacters = session.mistakes.length;
+  const incorrectCharacters = getUniqueMistakes(session.mistakes).length;
   const correctCharacters = Math.max(0, typedCharacters - incorrectCharacters);
 
   const rawWpm = typedCharacters / WORD_LENGTH / minutes;

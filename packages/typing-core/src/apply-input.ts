@@ -26,13 +26,22 @@ export function applyInput(session: TypingSession, command: ApplyInputCommand): 
   }
 
   if (command.kind === "backspace") {
+    if (session.typed.length > session.cursorIndex) {
+      return {
+        ...session,
+        typed: session.typed.slice(0, session.cursorIndex),
+        lastInputAt: command.timestamp,
+        status: session.startedAt === null ? "idle" : "running"
+      };
+    }
+
     if (session.cursorIndex === 0) return session;
 
     const correctedIndex = session.cursorIndex - 1;
 
     return {
       ...session,
-      typed: session.typed.slice(0, -1),
+      typed: session.typed.slice(0, correctedIndex),
       cursorIndex: correctedIndex,
       lastInputAt: command.timestamp,
       status: session.startedAt === null ? "idle" : "running"
@@ -58,8 +67,8 @@ export function applyInput(session: TypingSession, command: ApplyInputCommand): 
         timestamp: command.timestamp
       };
 
-  const nextTyped = session.typed + actual;
-  const nextCursor = session.cursorIndex + 1;
+  const nextTyped = session.typed.slice(0, session.cursorIndex) + actual;
+  const nextCursor = isCorrect ? session.cursorIndex + 1 : session.cursorIndex;
   const isFinished = nextCursor >= session.source.length;
 
   return {

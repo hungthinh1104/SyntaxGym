@@ -1,4 +1,5 @@
 import type { TypingMistake } from "@syntaxgym/typing-core";
+import { getUniqueMistakes } from "@syntaxgym/typing-core";
 import { rustImportantTokens } from "./rust-token-rules";
 
 export type WeakToken = {
@@ -16,12 +17,13 @@ export function buildRustTokenReport(input: {
   mistakes: TypingMistake[];
 }): TokenReport {
   const weakTokens: WeakToken[] = [];
+  const uniqueMistakes = getUniqueMistakes(input.mistakes);
 
   for (const token of rustImportantTokens) {
     const ranges = findTokenRanges(input.source, token);
     const positions: number[] = [];
 
-    for (const mistake of input.mistakes) {
+    for (const mistake of uniqueMistakes) {
       const hit = ranges.some((range) => mistake.index >= range.start && mistake.index < range.end);
       if (hit) positions.push(mistake.index);
     }
