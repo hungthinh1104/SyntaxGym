@@ -1,28 +1,42 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Snippet } from "@syntaxgym/content";
 import { builtInSnippets, practicePacks } from "@syntaxgym/content";
 import { buildRustTokenReport, generateRetrySnippet } from "@syntaxgym/code-analysis";
 import { calculateScore } from "@syntaxgym/typing-core";
 import { createLocalSessionHistoryRepository } from "@syntaxgym/storage";
-import { nowIso } from "@syntaxgym/shared";
 import { CodeTypingArea } from "./components/CodeTypingArea";
 import { PracticeStatsBar } from "./components/PracticeStatsBar";
 import { ResultSummary } from "./components/ResultSummary";
+import { DailyDrillCard } from "./components/DailyDrillCard";
 import { Seo } from "../../components/Seo";
 import { useTypingSessionController } from "./hooks/useTypingSessionController";
 import { ui } from "../../lib/ui";
+import { createLocalDailyDrillRepository } from "@syntaxgym/storage";
+import { localDateString, nowIso } from "@syntaxgym/shared";
 
 type Props = {
   snippet: Snippet;
   selectedPackId?: string | null;
-  onSelectSnippet?: (snippet: Snippet, packId?: string | null) => void;
+  sessionContext?: string | null;
+  onSelectSnippet?: (snippet: Snippet, packId?: string | null, context?: string | null) => void;
 };
 
 const historyRepository = createLocalSessionHistoryRepository();
 
-export function PracticeScreen({ snippet, selectedPackId, onSelectSnippet }: Props) {
+export function PracticeScreen({ snippet, selectedPackId, sessionContext, onSelectSnippet }: Props) {
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
+  const [dailyDrillCompletedStreak, setDailyDrillCompletedStreak] = useState<number | null>(null);
   const controller = useTypingSessionController(snippet);
+
+  useEffect(() => {
+    if (controller.session.status === "finished" && sessionContext === "daily-drill" && dailyDrillCompletedStreak === null) {
+      let active = true;
+      void createLocalDailyDrillRepository().complete(localDateString()).then((progress) => {
+        if (active) setDailyDrillCompletedStreak(progress.streak);
+      });
+      return () => { active = false; };
+    }
+  }, [controller.session.status, sessionContext, dailyDrillCompletedStreak]);
 
   const score = useMemo(
     () => calculateScore(controller.session),
@@ -72,7 +86,7 @@ export function PracticeScreen({ snippet, selectedPackId, onSelectSnippet }: Pro
     });
     const retrySnippet = generateRetrySnippet(currentReport.weakTokens);
     if (retrySnippet) {
-      onSelectSnippet(retrySnippet as Snippet, null); // Clear packId when retrying
+      onSelectSnippet(retrySnippet as Snippet, null, null); // Clear packId and context when retrying
     }
   }
 
@@ -85,7 +99,7 @@ export function PracticeScreen({ snippet, selectedPackId, onSelectSnippet }: Pro
 
   function handleNextSnippetClick() {
     if (onSelectSnippet && nextSnippet) {
-      onSelectSnippet(nextSnippet, selectedPackId);
+      onSelectSnippet(nextSnippet, selectedPackId, null);
     }
   }
 
@@ -96,6 +110,11 @@ export function PracticeScreen({ snippet, selectedPackId, onSelectSnippet }: Pro
         description="Practice Rust syntax and DSA code snippets with token-aware typing feedback."
       />
       <div className="flex-1 flex flex-col gap-32 w-full min-w-0">
+        <DailyDrillCard 
+          currentContext={sessionContext ?? null} 
+          onStartDailyDrill={(s) => onSelectSnippet?.(s, null, "daily-drill")} 
+        />
+        
         <div className="flex flex-col sm:flex-row gap-16 sm:gap-0 justify-between items-start">
           <div className="max-w-[600px]">
             <p className={ui.eyebrow + " mb-8"}>
@@ -131,6 +150,7 @@ export function PracticeScreen({ snippet, selectedPackId, onSelectSnippet }: Pro
           session={controller.session}
           score={score}
           tokenReport={tokenReport}
+          dailyDrillStreak={dailyDrillCompletedStreak}
           onRetryClick={onSelectSnippet ? handleRetryClick : undefined}
         />
 

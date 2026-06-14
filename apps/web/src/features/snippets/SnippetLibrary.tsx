@@ -9,7 +9,7 @@ import { ui } from "../../lib/ui";
 type Props = {
   selectedSnippetId: string;
   selectedPackId?: string | null;
-  onSelect: (snippet: Snippet, packId?: string | null) => void;
+  onSelect: (snippet: Snippet, packId?: string | null, context?: string | null) => void;
 };
 
 const repository = createLocalSnippetRepository();
@@ -67,7 +67,7 @@ export function SnippetLibrary({ selectedSnippetId, selectedPackId, onSelect }: 
     setCustomTitle("");
     setTopicFilter("custom");
     setLocalSelectedPackId(null);
-    onSelect(snippet, null);
+    onSelect(snippet, null, null);
   }
 
   const activePack = localSelectedPackId ? practicePacks.find(p => p.id === localSelectedPackId) : null;
@@ -118,7 +118,7 @@ export function SnippetLibrary({ selectedSnippetId, selectedPackId, onSelect }: 
               activePackSnippets.map((snippet, index) => (
                 <button
                   key={snippet.id}
-                  onClick={() => onSelect(snippet, activePack.id)}
+                  onClick={() => onSelect(snippet, activePack.id, null)}
                   className={
                     "group rounded-lg border p-16 text-left transition-colors flex flex-col h-full " +
                     (selectedSnippetId === snippet.id
@@ -211,7 +211,7 @@ export function SnippetLibrary({ selectedSnippetId, selectedPackId, onSelect }: 
                 key={snippet.id}
                 onClick={() => {
                   setLocalSelectedPackId(null);
-                  onSelect(snippet, null);
+                  onSelect(snippet, null, null);
                 }}
                 className={
                   "group rounded-lg border border-lavender-mist p-16 text-left transition-colors flex flex-col h-full " +

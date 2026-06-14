@@ -6,10 +6,11 @@ type Props = {
   session: TypingSession;
   score: TypingScore;
   tokenReport: TokenReport;
+  dailyDrillStreak?: number | null;
   onRetryClick?: (() => void) | undefined;
 };
 
-export function ResultSummary({ session, score, tokenReport, onRetryClick }: Props) {
+export function ResultSummary({ session, score, tokenReport, dailyDrillStreak, onRetryClick }: Props) {
   return (
     <div className="flex flex-col gap-32">
       <div>
@@ -22,6 +23,17 @@ export function ResultSummary({ session, score, tokenReport, onRetryClick }: Pro
           <Row label="Typed chars" value={score.typedCharacters.toString()} />
         </ul>
       </div>
+
+      {dailyDrillStreak !== null && dailyDrillStreak !== undefined && (
+        <div className="bg-code-rust/5 border border-code-rust/20 rounded-lg p-16 flex flex-col gap-8">
+          <h4 className={ui.eyebrow + " text-code-rust flex items-center gap-8"}>
+            <span>🎉</span> Daily drill complete
+          </h4>
+          <p className={ui.body + " text-code-rust"}>
+            Current streak: <strong className="font-bold">{dailyDrillStreak}</strong> day{dailyDrillStreak !== 1 ? "s" : ""}
+          </p>
+        </div>
+      )}
 
       <div>
         <h4 className={ui.eyebrow + " mb-4"}>Weak Rust tokens</h4>

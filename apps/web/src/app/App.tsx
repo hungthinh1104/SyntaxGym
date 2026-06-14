@@ -15,6 +15,8 @@ import { ui } from "../lib/ui";
 export function App() {
   const [selectedSnippet, setSelectedSnippet] = useState<Snippet>(builtInSnippets[0]!);
   const [selectedPackId, setSelectedPackId] = useState<string | null>(null);
+  const [sessionContext, setSessionContext] = useState<string | null>(null);
+  const [sessionNonce, setSessionNonce] = useState(0);
   const navigate = useNavigate();
 
   return (
@@ -61,15 +63,17 @@ export function App() {
       <main className={ui.page + " flex-1"}>
         <Routes>
           <Route path="/" element={<Navigate to="/practice" replace />} />
-          <Route path="/practice" element={<PracticeScreen snippet={selectedSnippet} selectedPackId={selectedPackId} onSelectSnippet={(snippet, packId) => { setSelectedSnippet(snippet); if (packId !== undefined) setSelectedPackId(packId); }} />} />
+          <Route path="/practice" element={<PracticeScreen key={`${selectedSnippet.id}-${sessionNonce}`} snippet={selectedSnippet} selectedPackId={selectedPackId} sessionContext={sessionContext} onSelectSnippet={(snippet, packId, context) => { setSelectedSnippet(snippet); setSessionNonce(n => n + 1); if (packId !== undefined) setSelectedPackId(packId); if (context !== undefined) setSessionContext(context); }} />} />
           <Route
             path="/snippets"
             element={
               <SnippetLibrary
                 selectedSnippetId={selectedSnippet.id}
-                onSelect={(snippet, packId) => {
+                onSelect={(snippet, packId, context) => {
                   setSelectedSnippet(snippet);
+                  setSessionNonce(n => n + 1);
                   setSelectedPackId(packId ?? null);
+                  setSessionContext(context ?? null);
                   navigate("/practice");
                 }}
               />
