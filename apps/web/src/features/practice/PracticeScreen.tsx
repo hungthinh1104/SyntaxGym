@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Snippet } from "@syntaxgym/content";
-import { buildRustTokenReport } from "@syntaxgym/code-analysis";
+import { buildRustTokenReport, generateRetrySnippet } from "@syntaxgym/code-analysis";
 import { calculateScore } from "@syntaxgym/typing-core";
 import { createLocalSessionHistoryRepository } from "@syntaxgym/storage";
 import { nowIso } from "@syntaxgym/shared";
@@ -13,11 +13,12 @@ import { ui } from "../../lib/ui";
 
 type Props = {
   snippet: Snippet;
+  onSelectSnippet?: (snippet: Snippet) => void;
 };
 
 const historyRepository = createLocalSessionHistoryRepository();
 
-export function PracticeScreen({ snippet }: Props) {
+export function PracticeScreen({ snippet, onSelectSnippet }: Props) {
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
   const controller = useTypingSessionController(snippet);
 
@@ -59,6 +60,18 @@ export function PracticeScreen({ snippet }: Props) {
     });
 
     setSavedMessage("Saved to history.");
+  }
+
+  function handleRetryClick() {
+    if (!onSelectSnippet) return;
+    const currentReport = buildRustTokenReport({
+      source: controller.session.source,
+      mistakes: controller.session.mistakes
+    });
+    const retrySnippet = generateRetrySnippet(currentReport.weakTokens);
+    if (retrySnippet) {
+      onSelectSnippet(retrySnippet as Snippet);
+    }
   }
 
   return (
@@ -103,6 +116,7 @@ export function PracticeScreen({ snippet }: Props) {
           session={controller.session}
           score={score}
           tokenReport={tokenReport}
+          onRetryClick={onSelectSnippet ? handleRetryClick : undefined}
         />
 
         {controller.session.status === "finished" && (

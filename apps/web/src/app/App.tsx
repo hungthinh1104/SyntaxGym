@@ -60,7 +60,7 @@ export function App() {
       <main className={ui.page + " flex-1"}>
         <Routes>
           <Route path="/" element={<Navigate to="/practice" replace />} />
-          <Route path="/practice" element={<PracticeScreen snippet={selectedSnippet} />} />
+          <Route path="/practice" element={<PracticeScreen snippet={selectedSnippet} onSelectSnippet={setSelectedSnippet} />} />
           <Route
             path="/snippets"
             element={

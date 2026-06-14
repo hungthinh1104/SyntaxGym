@@ -6,9 +6,10 @@ type Props = {
   session: TypingSession;
   score: TypingScore;
   tokenReport: TokenReport;
+  onRetryClick?: (() => void) | undefined;
 };
 
-export function ResultSummary({ session, score, tokenReport }: Props) {
+export function ResultSummary({ session, score, tokenReport, onRetryClick }: Props) {
   return (
     <div className="flex flex-col gap-32">
       <div>
@@ -26,18 +27,28 @@ export function ResultSummary({ session, score, tokenReport }: Props) {
         <h4 className={ui.eyebrow + " mb-4"}>Weak Rust tokens</h4>
         <p className={`${ui.body} text-[13px] mb-12`}>Focus on these patterns in your next session to build muscle memory.</p>
         {tokenReport.weakTokens.length === 0 ? (
-          <p className={ui.body}>No weak Rust token detected yet.</p>
+          <p className={ui.body}>No weak Rust tokens found in this session.</p>
         ) : (
-          <ul className="flex flex-col">
-            {tokenReport.weakTokens.slice(0, 8).map((item) => (
-              <li key={item.token} className="flex items-center justify-between border-b border-lavender-mist py-8">
-                <code className="rounded-md bg-lavender-mist px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-sst-ink break-all max-w-[80%]">
-                  {item.token}
-                </code>
-                <span className="text-caption text-fog shrink-0">{item.misses} miss{item.misses > 1 ? "es" : ""}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="flex flex-col gap-16">
+            <ul className="flex flex-col">
+              {tokenReport.weakTokens.slice(0, 8).map((item) => (
+                <li key={item.token} className="flex items-center justify-between border-b border-lavender-mist py-8">
+                  <code className="rounded-md bg-lavender-mist px-8 py-2 font-ibm-plex-mono text-caption font-semibold text-sst-ink break-all max-w-[80%]">
+                    {item.token}
+                  </code>
+                  <span className="text-caption text-fog shrink-0">{item.misses} miss{item.misses > 1 ? "es" : ""}</span>
+                </li>
+              ))}
+            </ul>
+            {onRetryClick && session.status === "finished" && (
+              <button 
+                onClick={onRetryClick}
+                className={ui.ghostButton + " flex justify-center items-center gap-8 w-full border-sst-ink"}
+              >
+                Practice weak tokens again <span className="font-ibm-plex-mono text-mist">&gt;</span>
+              </button>
+            )}
+          </div>
         )}
       </div>
 
