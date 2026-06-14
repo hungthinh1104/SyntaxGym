@@ -22,7 +22,7 @@ export function App() {
   return (
     <div className="min-h-screen bg-paper text-sst-ink font-rubik-variable flex flex-col">
       <header className="sticky top-0 z-20 border-b border-lavender-mist bg-paper/95 backdrop-blur">
-        <div className="mx-auto flex min-h-[64px] flex-wrap md:py-0 py-12 max-w-[1200px] items-center justify-between px-16 md:px-24 gap-16">
+        <div className="mx-auto flex min-h-[64px] flex-wrap md:py-0 py-12 max-w-[1440px] items-center justify-between px-16 md:px-24 gap-16">
           <Link to="/" className="flex items-center gap-4">
             <span className="text-[18px]">⚡</span>
             <span className="text-body font-semibold tracking-wide">SyntaxGym</span>
@@ -91,7 +91,7 @@ export function App() {
       </main>
       
       <footer className="w-full border-t border-lavender-mist flex justify-center py-16 mt-auto">
-        <div className="mx-auto flex max-w-[1200px] w-full flex-col sm:flex-row gap-16 sm:gap-0 justify-between items-center px-16 md:px-24 text-caption text-fog">
+        <div className="mx-auto flex max-w-[1440px] w-full flex-col sm:flex-row gap-16 sm:gap-0 justify-between items-center px-16 md:px-24 text-caption text-fog">
           <span>Local-first · No login required</span>
           <div className="flex gap-16">
             <Link to="/docs" className="hover:text-sst-ink transition-colors">Guide</Link>

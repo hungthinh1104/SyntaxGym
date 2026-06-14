@@ -104,12 +104,13 @@ export function PracticeScreen({ snippet, selectedPackId, sessionContext, onSele
   }
 
   return (
-    <div className="flex flex-col gap-32 w-full lg:flex-row lg:items-start max-w-[1200px] mx-auto">
+    <div className="flex flex-col gap-24 w-full mx-auto">
       <Seo
         title="Practice Rust Code Typing | SyntaxGym"
         description="Practice Rust syntax and DSA code snippets with token-aware typing feedback."
       />
-      <div className="flex-1 flex flex-col gap-32 w-full min-w-0">
+
+      <div className="flex flex-col gap-16">
         <DailyDrillCard 
           currentContext={sessionContext ?? null} 
           onStartDailyDrill={(s) => onSelectSnippet?.(s, null, "daily-drill")} 
@@ -135,55 +136,61 @@ export function PracticeScreen({ snippet, selectedPackId, sessionContext, onSele
             Reset <span className="font-ibm-plex-mono">&gt;</span>
           </button>
         </div>
-
-        <PracticeStatsBar session={controller.session} score={score} />
-
-        <CodeTypingArea
-          session={controller.session}
-          onCharacter={controller.typeCharacter}
-          onBackspace={controller.backspace}
-        />
       </div>
 
-      <aside className="w-full lg:w-[320px] flex flex-col gap-32 shrink-0">
-        <ResultSummary
-          session={controller.session}
-          score={score}
-          tokenReport={tokenReport}
-          dailyDrillStreak={dailyDrillCompletedStreak}
-          onRetryClick={onSelectSnippet ? handleRetryClick : undefined}
-        />
+      <div className="grid gap-24 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <main className="min-w-0 flex flex-col gap-32 order-2 lg:order-1">
+          <CodeTypingArea
+            session={controller.session}
+            onCharacter={controller.typeCharacter}
+            onBackspace={controller.backspace}
+          />
+          
+          {controller.session.status === "finished" && (
+            <div className="flex flex-col gap-32 animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <ResultSummary
+                session={controller.session}
+                score={score}
+                tokenReport={tokenReport}
+                dailyDrillStreak={dailyDrillCompletedStreak}
+                onRetryClick={onSelectSnippet ? handleRetryClick : undefined}
+              />
 
-        {controller.session.status === "finished" && (
-          <div className="flex flex-col gap-16 pt-16 border-t border-lavender-mist">
-            <button 
-              onClick={saveResult}
-              className={ui.ghostButton + " flex justify-center items-center gap-8 border-sst-ink"}
-            >
-              Save result <span className="font-ibm-plex-mono text-mist">&gt;</span>
-            </button>
-            <button 
-              onClick={controller.reset}
-              className={ui.ghostButton + " flex justify-center items-center gap-8"}
-            >
-              Try again <span className="font-ibm-plex-mono text-mist">&gt;</span>
-            </button>
-            {nextSnippet && (
-              <button 
-                onClick={handleNextSnippetClick}
-                className={ui.ghostButton + " flex justify-center items-center gap-8 bg-lavender-mist/50 hover:bg-lavender-mist"}
-              >
-                Next pack snippet <span className="font-ibm-plex-mono text-mist">&gt;</span>
-              </button>
-            )}
-            {savedMessage && (
-              <p className="text-caption text-code-teal text-center mt-8">
-                {savedMessage}
-              </p>
-            )}
-          </div>
-        )}
-      </aside>
+              <div className="flex flex-wrap gap-16 pt-16 border-t border-lavender-mist">
+                <button 
+                  onClick={saveResult}
+                  className={ui.ghostButton + " flex justify-center items-center gap-8 border-sst-ink"}
+                >
+                  Save result <span className="font-ibm-plex-mono text-mist">&gt;</span>
+                </button>
+                <button 
+                  onClick={controller.reset}
+                  className={ui.ghostButton + " flex justify-center items-center gap-8"}
+                >
+                  Try again <span className="font-ibm-plex-mono text-mist">&gt;</span>
+                </button>
+                {nextSnippet && (
+                  <button 
+                    onClick={handleNextSnippetClick}
+                    className={ui.ghostButton + " flex justify-center items-center gap-8 bg-lavender-mist/50 hover:bg-lavender-mist"}
+                  >
+                    Next pack snippet <span className="font-ibm-plex-mono text-mist">&gt;</span>
+                  </button>
+                )}
+              </div>
+              {savedMessage && (
+                <p className="text-caption text-code-teal mt-[-16px]">
+                  {savedMessage}
+                </p>
+              )}
+            </div>
+          )}
+        </main>
+
+        <aside className="lg:sticky lg:top-24 h-fit flex flex-col gap-24 shrink-0 order-1 lg:order-2">
+          <PracticeStatsBar session={controller.session} score={score} />
+        </aside>
+      </div>
     </div>
   );
 }

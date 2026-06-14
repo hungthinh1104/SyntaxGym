@@ -108,12 +108,11 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
     const rafId = requestAnimationFrame(() => {
       if (!activeCursorRef.current || !containerRef.current) return;
       
-      const containerRect = containerRef.current.getBoundingClientRect();
       const cursorRect = activeCursorRef.current.getBoundingClientRect();
       
       if (
-        cursorRect.bottom > containerRect.bottom - 40 ||
-        cursorRect.top < containerRect.top + 40
+        cursorRect.bottom > window.innerHeight - 100 ||
+        cursorRect.top < 100
       ) {
         activeCursorRef.current.scrollIntoView({
           behavior: "auto",
@@ -201,14 +200,15 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
   }
 
   return (
-    <div className="relative min-h-[360px] lg:min-h-[560px]">
+    <div className="relative w-full">
       <span id="typing-instruction" className="sr-only">Type the code below. The editor is ready.</span>
       <div
         ref={containerRef}
         tabIndex={0}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className={ui.codeBlock + " absolute inset-0 overflow-auto whitespace-pre-wrap tracking-[-0.021em] outline-none focus:ring-1 focus:ring-sst-ink/20 focus:border-sst-ink/30 transition-all"}
+        className={"w-full min-h-[420px] lg:min-h-[640px] whitespace-pre-wrap outline-none focus:ring-1 focus:ring-sst-ink/20 focus:border-sst-ink/30 transition-all " +
+                   "rounded-lg border border-lavender-mist bg-white p-20 lg:p-32 font-ibm-plex-mono text-[16px] lg:text-[20px] leading-[1.7] text-sst-ink"}
         onKeyDown={handleKeyDown}
         aria-label="Code typing area"
         aria-describedby="typing-instruction"
@@ -236,13 +236,13 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
 
       {!isFocused && session.status !== "finished" && (
         <div 
-          className="absolute inset-0 z-10 flex items-center justify-center bg-paper/60 backdrop-blur-[2px] cursor-pointer rounded-md transition-all"
+          className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-[2px] cursor-pointer rounded-lg transition-all"
           onClick={() => containerRef.current?.focus()}
           aria-hidden="true"
         >
-          <span className={ui.eyebrow + " flex items-center gap-8 bg-paper px-16 py-8 rounded-full border border-lavender-mist shadow-sm text-sst-ink"}>
-            <span className="w-8 h-8 rounded-full bg-sst-ink animate-pulse" />
-            Click the code area to continue typing
+          <span className={ui.eyebrow + " flex items-center gap-12 bg-white px-24 py-12 rounded-full border border-lavender-mist shadow-md text-sst-ink text-[14px]"}>
+            <span className="w-10 h-10 rounded-full bg-sst-ink animate-pulse" />
+            Click to focus and start typing
           </span>
         </div>
       )}
