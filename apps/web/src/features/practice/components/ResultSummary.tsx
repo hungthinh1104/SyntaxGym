@@ -23,7 +23,8 @@ export function ResultSummary({ session, score, tokenReport }: Props) {
       </div>
 
       <div>
-        <h4 className={ui.eyebrow + " mb-12"}>Weak Rust tokens</h4>
+        <h4 className={ui.eyebrow + " mb-4"}>Weak Rust tokens</h4>
+        <p className={`${ui.body} text-[13px] mb-12`}>Focus on these patterns in your next session to build muscle memory.</p>
         {tokenReport.weakTokens.length === 0 ? (
           <p className={ui.body}>No weak Rust token detected yet.</p>
         ) : (

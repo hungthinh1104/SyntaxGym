@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, memo, forwardRef } from "react";
 import type { TypingSession } from "@syntaxgym/typing-core";
 import { ui } from "../../../lib/ui";
 
@@ -38,12 +38,65 @@ function buildSyntaxColors(source: string): (string | null)[] {
   return colors;
 }
 
+type CharProps = {
+  char: string;
+  isCurrent: boolean;
+  isMistake: boolean;
+  isTyped: boolean;
+  syntaxClass: string;
+};
+
+const Char = memo(forwardRef<HTMLSpanElement, CharProps>(({ char, isCurrent, isMistake, isTyped, syntaxClass }, ref) => {
+  let charClass = "rounded-[2px] transition-colors ";
+  
+  if (isCurrent) {
+    charClass += "bg-sst-ink text-paper motion-safe:animate-blink ";
+  } else if (isMistake) {
+    charClass += "bg-code-rust/10 text-code-rust font-semibold ";
+  } else if (isTyped) {
+    charClass += syntaxClass + " ";
+  } else {
+    charClass += syntaxClass + " opacity-40 ";
+  }
+
+  if (char === "\n") {
+    return (
+      <span ref={ref} className={charClass}>
+        {isMistake && "↵"}{"\n"}
+      </span>
+    );
+  }
+
+  if (char === " ") {
+    return (
+      <span ref={ref} className={charClass}>
+        {isMistake ? "·" : " "}
+      </span>
+    );
+  }
+
+  if (char === "\t") {
+    return (
+      <span ref={ref} className={charClass}>
+        {isMistake ? "⇥" : "  "}
+      </span>
+    );
+  }
+
+  return (
+    <span ref={ref} className={charClass}>
+      {char}
+    </span>
+  );
+}));
+
 export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const activeCursorRef = useRef<HTMLSpanElement | null>(null);
   const [isFocused, setIsFocused] = useState(false);
 
   const syntaxColors = useMemo(() => buildSyntaxColors(session.source), [session.source]);
+  const sourceChars = useMemo(() => Array.from(session.source), [session.source]);
 
   useEffect(() => {
     containerRef.current?.focus();
@@ -160,53 +213,23 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
         aria-label="Code typing area"
         aria-describedby="typing-instruction"
       >
-      {Array.from(session.source).map((char, index) => {
+      {sourceChars.map((char, index) => {
         const typedChar = session.typed[index];
         const isTyped = typedChar !== undefined;
         const isCurrent = index === session.cursorIndex;
         const isMistake = isTyped && typedChar !== session.source[index];
         const syntaxClass = syntaxColors[index] || "text-sst-ink";
         
-        let charClass = "rounded-[2px] transition-colors ";
-        
-        if (isCurrent) {
-          charClass += "bg-sst-ink text-paper motion-safe:animate-blink ";
-        } else if (isMistake) {
-          charClass += "bg-code-rust/10 text-code-rust font-semibold ";
-        } else if (isTyped) {
-          charClass += syntaxClass + " ";
-        } else {
-          charClass += syntaxClass + " opacity-40 ";
-        }
-
-        if (char === "\n") {
-          return (
-            <span key={index} ref={isCurrent ? activeCursorRef : undefined} className={charClass}>
-              {isMistake && "↵"}{"\n"}
-            </span>
-          );
-        }
-
-        if (char === " ") {
-          return (
-            <span key={index} ref={isCurrent ? activeCursorRef : undefined} className={charClass}>
-              {isMistake ? "·" : " "}
-            </span>
-          );
-        }
-
-        if (char === "\t") {
-          return (
-            <span key={index} ref={isCurrent ? activeCursorRef : undefined} className={charClass}>
-              {isMistake ? "⇥" : "  "}
-            </span>
-          );
-        }
-
         return (
-          <span key={index} ref={isCurrent ? activeCursorRef : undefined} className={charClass}>
-            {char}
-          </span>
+          <Char
+            key={index}
+            ref={isCurrent ? activeCursorRef : undefined}
+            char={char}
+            isCurrent={isCurrent}
+            isMistake={isMistake}
+            isTyped={isTyped}
+            syntaxClass={syntaxClass}
+          />
         );
       })}
       </div>
