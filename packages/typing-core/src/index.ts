@@ -5,3 +5,4 @@ export * from "./calculate-score";
 export * from "./classify-mistake";
 export * from "./selectors";
 export * from "./unique-mistakes";
+export * from "./smart-tab";

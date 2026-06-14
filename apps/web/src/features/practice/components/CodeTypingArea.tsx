@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, memo, forwardRef } from "react";
 import type { TypingSession } from "@syntaxgym/typing-core";
+import { getSmartTabKeystrokes } from "@syntaxgym/typing-core";
 import { ui } from "../../../lib/ui";
 
 type Props = {
@@ -175,21 +176,8 @@ export function CodeTypingArea({ session, onCharacter, onBackspace }: Props) {
 
     if (event.key === "Tab") {
       event.preventDefault();
-      
-      let spacesToType = 0;
-      for (let i = session.cursorIndex; i < session.source.length; i++) {
-        if (session.source[i] === " " && spacesToType < 4) {
-          spacesToType++;
-        } else {
-          break;
-        }
-      }
-      
-      if (spacesToType === 0) spacesToType = 4;
-
-      for (let i = 0; i < spacesToType; i++) {
-        onCharacter(" ");
-      }
+      const chars = getSmartTabKeystrokes(session.source, session.cursorIndex);
+      chars.forEach((c) => onCharacter(c));
       return;
     }
 
