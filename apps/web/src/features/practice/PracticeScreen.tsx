@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import type { Snippet } from "@syntaxgym/content";
+import { builtInSnippets, practicePacks } from "@syntaxgym/content";
 import { buildRustTokenReport, generateRetrySnippet } from "@syntaxgym/code-analysis";
 import { calculateScore } from "@syntaxgym/typing-core";
 import { createLocalSessionHistoryRepository } from "@syntaxgym/storage";
@@ -13,12 +14,13 @@ import { ui } from "../../lib/ui";
 
 type Props = {
   snippet: Snippet;
-  onSelectSnippet?: (snippet: Snippet) => void;
+  selectedPackId?: string | null;
+  onSelectSnippet?: (snippet: Snippet, packId?: string | null) => void;
 };
 
 const historyRepository = createLocalSessionHistoryRepository();
 
-export function PracticeScreen({ snippet, onSelectSnippet }: Props) {
+export function PracticeScreen({ snippet, selectedPackId, onSelectSnippet }: Props) {
   const [savedMessage, setSavedMessage] = useState<string | null>(null);
   const controller = useTypingSessionController(snippet);
 
@@ -70,7 +72,20 @@ export function PracticeScreen({ snippet, onSelectSnippet }: Props) {
     });
     const retrySnippet = generateRetrySnippet(currentReport.weakTokens);
     if (retrySnippet) {
-      onSelectSnippet(retrySnippet as Snippet);
+      onSelectSnippet(retrySnippet as Snippet, null); // Clear packId when retrying
+    }
+  }
+
+  const currentPack = selectedPackId ? practicePacks.find(p => p.id === selectedPackId) : null;
+  const currentIndexInPack = currentPack ? currentPack.snippetIds.indexOf(snippet.id) : -1;
+  const nextSnippetId = currentPack && currentIndexInPack >= 0 && currentIndexInPack < currentPack.snippetIds.length - 1 
+    ? currentPack.snippetIds[currentIndexInPack + 1] 
+    : null;
+  const nextSnippet = nextSnippetId ? builtInSnippets.find(s => s.id === nextSnippetId) : null;
+
+  function handleNextSnippetClick() {
+    if (onSelectSnippet && nextSnippet) {
+      onSelectSnippet(nextSnippet, selectedPackId);
     }
   }
 
@@ -133,6 +148,14 @@ export function PracticeScreen({ snippet, onSelectSnippet }: Props) {
             >
               Try again <span className="font-ibm-plex-mono text-mist">&gt;</span>
             </button>
+            {nextSnippet && (
+              <button 
+                onClick={handleNextSnippetClick}
+                className={ui.ghostButton + " flex justify-center items-center gap-8 bg-lavender-mist/50 hover:bg-lavender-mist"}
+              >
+                Next pack snippet <span className="font-ibm-plex-mono text-mist">&gt;</span>
+              </button>
+            )}
             {savedMessage && (
               <p className="text-caption text-code-teal text-center mt-8">
                 {savedMessage}

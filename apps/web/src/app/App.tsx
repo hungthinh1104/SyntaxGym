@@ -14,6 +14,7 @@ import { ui } from "../lib/ui";
 
 export function App() {
   const [selectedSnippet, setSelectedSnippet] = useState<Snippet>(builtInSnippets[0]!);
+  const [selectedPackId, setSelectedPackId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   return (
@@ -60,14 +61,15 @@ export function App() {
       <main className={ui.page + " flex-1"}>
         <Routes>
           <Route path="/" element={<Navigate to="/practice" replace />} />
-          <Route path="/practice" element={<PracticeScreen snippet={selectedSnippet} onSelectSnippet={setSelectedSnippet} />} />
+          <Route path="/practice" element={<PracticeScreen snippet={selectedSnippet} selectedPackId={selectedPackId} onSelectSnippet={(snippet, packId) => { setSelectedSnippet(snippet); if (packId !== undefined) setSelectedPackId(packId); }} />} />
           <Route
             path="/snippets"
             element={
               <SnippetLibrary
                 selectedSnippetId={selectedSnippet.id}
-                onSelect={(snippet) => {
+                onSelect={(snippet, packId) => {
                   setSelectedSnippet(snippet);
+                  setSelectedPackId(packId ?? null);
                   navigate("/practice");
                 }}
               />

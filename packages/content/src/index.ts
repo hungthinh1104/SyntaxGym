@@ -1,4 +1,5 @@
 export * from "./types";
+export * from "./practice-packs";
 
 import { structSnippets } from "./snippets/rust/structs";
 import { enumSnippets } from "./snippets/rust/enums";

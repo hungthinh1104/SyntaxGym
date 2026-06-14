@@ -1,21 +1,24 @@
 import { useEffect, useMemo, useState } from "react";
-import { builtInSnippets, type Snippet } from "@syntaxgym/content";
+import { builtInSnippets, practicePacks, type Snippet } from "@syntaxgym/content";
 import { createLocalSnippetRepository } from "@syntaxgym/storage";
 import { createId, nowIso } from "@syntaxgym/shared";
 import { Seo } from "../../components/Seo";
+import { PracticePackCard } from "./PracticePackCard";
 import { ui } from "../../lib/ui";
 
 type Props = {
   selectedSnippetId: string;
-  onSelect: (snippet: Snippet) => void;
+  selectedPackId?: string | null;
+  onSelect: (snippet: Snippet, packId?: string | null) => void;
 };
 
 const repository = createLocalSnippetRepository();
 const MAX_CUSTOM_SNIPPET_LENGTH = 5000;
 
-export function SnippetLibrary({ selectedSnippetId, onSelect }: Props) {
+export function SnippetLibrary({ selectedSnippetId, selectedPackId, onSelect }: Props) {
   const [customSnippets, setCustomSnippets] = useState<Snippet[]>([]);
   const [topicFilter, setTopicFilter] = useState<string>("All");
+  const [localSelectedPackId, setLocalSelectedPackId] = useState<string | null>(selectedPackId || null);
 
   const [customTitle, setCustomTitle] = useState("");
   const [customCode, setCustomCode] = useState("");
@@ -63,8 +66,12 @@ export function SnippetLibrary({ selectedSnippetId, onSelect }: Props) {
     setCustomCode("");
     setCustomTitle("");
     setTopicFilter("custom");
-    onSelect(snippet);
+    setLocalSelectedPackId(null);
+    onSelect(snippet, null);
   }
+
+  const activePack = localSelectedPackId ? practicePacks.find(p => p.id === localSelectedPackId) : null;
+  const activePackSnippets = activePack ? activePack.snippetIds.map(id => builtInSnippets.find(s => s.id === id)).filter((s): s is Snippet => s !== undefined) : [];
 
   return (
     <section className="w-full flex flex-col gap-32">
@@ -79,7 +86,63 @@ export function SnippetLibrary({ selectedSnippetId, onSelect }: Props) {
         </p>
       </div>
 
-      <div className={ui.panel + " flex flex-col gap-16"}>
+      {!activePack ? (
+        <div className="flex flex-col gap-16">
+          <h3 className={ui.headingSm}>Practice Packs</h3>
+          <p className={ui.body + " mb-8"}>Choose a focused Rust syntax path, then practice snippets in order.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+            {practicePacks.map(pack => (
+              <PracticePackCard key={pack.id} pack={pack} onSelect={(p) => setLocalSelectedPackId(p.id)} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className={ui.panel + " flex flex-col gap-16 border-code-rust/30 bg-code-rust/5"}>
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className={ui.headingSm + " text-code-rust"}>{activePack.title}</h3>
+              <p className={ui.body}>{activePack.description}</p>
+            </div>
+            <button 
+              onClick={() => setLocalSelectedPackId(null)}
+              className={ui.ghostButton + " shrink-0"}
+            >
+              View all snippets
+            </button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mt-8">
+            {activePackSnippets.length === 0 ? (
+              <p className={ui.body}>No snippets are available for this pack yet.</p>
+            ) : (
+              activePackSnippets.map((snippet, index) => (
+                <button
+                  key={snippet.id}
+                  onClick={() => onSelect(snippet, activePack.id)}
+                  className={
+                    "group rounded-lg border p-16 text-left transition-colors flex flex-col h-full " +
+                    (selectedSnippetId === snippet.id
+                      ? "bg-lavender-mist border-sst-ink"
+                      : "bg-paper border-lavender-mist hover:bg-lavender-mist")
+                  }
+                >
+                  <p className={ui.eyebrow + " mb-4"}>
+                    Step {index + 1}
+                  </p>
+                  <strong className="block text-body font-semibold text-sst-ink mb-4">
+                    {snippet.title}
+                  </strong>
+                  <span className={ui.body + " block line-clamp-2"}>
+                    {snippet.description}
+                  </span>
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className={ui.panel + " flex flex-col gap-16 mt-16"}>
         <h3 className={ui.headingSm}>Practice Custom Code</h3>
         <div className="flex flex-col gap-16 lg:flex-row lg:items-start">
           <input
@@ -146,7 +209,10 @@ export function SnippetLibrary({ selectedSnippetId, onSelect }: Props) {
             filteredSnippets.map((snippet) => (
               <button
                 key={snippet.id}
-                onClick={() => onSelect(snippet)}
+                onClick={() => {
+                  setLocalSelectedPackId(null);
+                  onSelect(snippet, null);
+                }}
                 className={
                   "group rounded-lg border border-lavender-mist p-16 text-left transition-colors flex flex-col h-full " +
                   (selectedSnippetId === snippet.id

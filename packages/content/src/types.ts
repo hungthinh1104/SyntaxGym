@@ -30,3 +30,12 @@ export type Snippet = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type PracticePack = {
+  id: string;
+  title: string;
+  description: string;
+  level: "beginner" | "intermediate" | "advanced";
+  focusTokens: string[];
+  snippetIds: string[];
+};
